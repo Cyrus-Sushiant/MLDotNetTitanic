@@ -1,0 +1,75 @@
+﻿@page "{PassengerId?}"
+@model MLDotNetTitanic.TestDataModel
+@{
+    ViewData["Title"] = "Test Data";
+}
+
+<div class="row">
+    <h1 class="col-12">Test Data</h1>
+</div>
+<hr />
+
+<div class="alert alert-info">
+    <h2>Result:</h2>
+    <ul>
+        <li><strong>Total items: </strong>@Model.TotalItems</li>
+        <li><strong>Total items submission: </strong>@Model.TotalItemsSubmission</li>
+        <li><strong>Accuracy: </strong>@Model.Accuracy.ToString("P")</li>
+    </ul>
+</div>
+
+@if (Model.PassengerId.HasValue && Model.ResultItem != null)
+{
+    <div class="alert @(Model.ResultItem.ActualSurvived == Model.ResultItem.PredictedSurvived ? "alert-success" : "alert-danger")">
+        <h2>Passenger id: @Model.ResultItem.PassengerId</h2>
+        <ul>
+            <li><strong>Actual survived: </strong>@Model.ResultItem.ActualSurvived</li>
+            <li><strong>Predicted survived: </strong>@Model.ResultItem.PredictedSurvived</li>
+        </ul>
+    </div>
+}
+
+<div class="row">
+    <div class="col-12">
+        <table class="table table-sm table-striped table-hover border-bottom table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">@Html.DisplayNameFor(model => model.ResultList[0].PassengerId)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.ResultList[0].Pclass)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.ResultList[0].Name)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.ResultList[0].Sex)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.ResultList[0].Age)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.ResultList[0].SibSp)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.ResultList[0].Parch)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.ResultList[0].Ticket)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.ResultList[0].Fare)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.ResultList[0].Cabin)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.ResultList[0].Embarked)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ResultList)
+                {
+                    <tr class="@(item.ActualSurvived == item.PredictedSurvived ? "table-success" : "table-danger")">
+                        <th scope="row">
+                            <a asp-page="TestData" asp-route-PassengerId="@item.PassengerId" data-toggle="tooltip" data-placement="right" data-html="true" title="" data-original-title="<b>Actual Survived:</b>@item.ActualSurvived<br /><b>Predicted Survived:</b>@item.PredictedSurvived">
+                                @Html.DisplayFor(modelItem => item.PassengerId)
+                            </a>
+                        </th>
+                        <td>@Html.DisplayFor(modelItem => item.Pclass)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Sex)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Age)</td>
+                        <td>@Html.DisplayFor(modelItem => item.SibSp)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Parch)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Ticket)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Fare)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Cabin)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Embarked)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

@@ -1,0 +1,81 @@
+﻿@page
+@model MLDotNetTitanic.TrainDataModel
+@{
+    ViewData["Title"] = "Train Data";
+}
+
+
+<div class="row">
+    <h1 class="col-8">Train Data</h1>
+    <div class="col-4 text-right">
+        <form asp-page="TrainData" method="post">
+            <button type="submit" class="btn btn-primary font-weight-bold">Strat training</button>
+        </form>
+    </div>
+</div>
+<hr />
+<div class="alert alert-info">
+    <h2>Train Details:</h2>
+    <ul>
+        <li><strong>Scenario: </strong>Sentiment Analysis</li>
+        <li><strong>ML Task: </strong>binary-classification</li>
+        <li><strong>Column to Predict (Label): </strong>Survived</li>
+        <li><strong>Input Columns (Features): </strong>Pclass, Sex, Age, SibSp, Parch, Cabin, Embarked</li>
+        <li><strong>Algorithm: </strong>LightGbmBinary</li>
+        <li><strong>Overall Accuracy: </strong>85.06%</li>
+    </ul>
+</div>
+@if (!string.IsNullOrEmpty(Model.EvaluateQualityMessage))
+{
+<div class="alert alert-success">
+    <h2>Succeed!</h2>
+    <ul>
+        <li>The model is trained.</li>
+        <li><strong>Evaluate quality of Model: </strong>@Model.EvaluateQualityMessage</li>
+        <li>The model is saved to data directory.</li>
+        <li><strong>Training Time: </strong>@Model.TrainingTime.ToString("0.##") seconds</li>
+    </ul>
+</div>
+}
+<div class="row">
+    <div class="col-12">
+        <table class="table table-sm table-striped table-hover border-bottom table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Trains[0].PassengerId)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Trains[0].Survived)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Trains[0].Pclass)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Trains[0].Name)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Trains[0].Sex)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Trains[0].Age)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Trains[0].SibSp)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Trains[0].Parch)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Trains[0].Ticket)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Trains[0].Fare)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Trains[0].Cabin)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Trains[0].Embarked)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Trains)
+                {
+                    <tr>
+                        <th scope="row">@Html.DisplayFor(modelItem => item.PassengerId)</th>
+                        <td>@Html.DisplayFor(modelItem => item.Survived)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Pclass)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Sex)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Age)</td>
+                        <td>@Html.DisplayFor(modelItem => item.SibSp)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Parch)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Ticket)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Fare)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Cabin)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Embarked)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
