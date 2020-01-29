@@ -67,14 +67,8 @@ namespace MLDotNetTitanic.ML
         private static void SaveModel(MLContext mlContext, ITransformer mlModel, string modelPath, DataViewSchema modelInputSchema)
         {
             // Save/persist the trained model to a .ZIP file
-            //mlContext.Model.Save(mlModel, modelInputSchema, modelPath);
-
             var path = Path.Combine(modelPath, "MLModel.zip");
-            using (var fs = new FileStream(path, FileMode.Create, FileAccess.Write))
-            {
-                mlContext.Model.Save(mlModel, modelInputSchema, fs);
-                fs.Close();
-            }
+            mlContext.Model.Save(mlModel, modelInputSchema, path);
         }
 
         public static string PrintBinaryClassificationFoldsAverageMetrics(IEnumerable<TrainCatalogBase.CrossValidationResult<BinaryClassificationMetrics>> crossValResults)
